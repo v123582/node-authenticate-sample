@@ -4,6 +4,8 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+var session = require('express-session');
+
 var app = express();
 
 var indexRouter = require('./routes/index');
@@ -18,6 +20,15 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({
+    key: 'user_sid',
+    secret: 'alphacamp',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        expires: 600000
+    }
+}));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
