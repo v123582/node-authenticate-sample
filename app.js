@@ -30,6 +30,12 @@ app.use(session({
     }
 }));
 
+const passport = require('passport')
+app.use(passport.initialize())
+app.use(passport.session())
+
+require('./config/passport')(passport)
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
